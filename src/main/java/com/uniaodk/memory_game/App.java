@@ -24,6 +24,13 @@ public class App extends Application {
 	}
 
 	@Override
+	public void stop() throws Exception {
+		Game.timerToReveal.cancel();
+		Game.timerToReveal.purge();
+		super.stop();
+	}
+
+	@Override
 	public void start(Stage stage) throws Exception {
 		Scene scene = new Scene(buildRoot(), WINDOW_WIDTH, WINDOW_HEIGTH);
 		Image image = new Image(GAME_ICON);

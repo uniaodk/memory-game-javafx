@@ -3,12 +3,11 @@ package com.uniaodk.memory_game.layout;
 import java.util.List;
 import com.uniaodk.memory_game.Game;
 import com.uniaodk.memory_game.base.Card;
+import com.uniaodk.memory_game.node.CardNode;
 import javafx.geometry.Pos;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 
@@ -19,10 +18,10 @@ public class GameBoardLayout extends GridPane {
 		this.setAlignment(Pos.CENTER);
 		this.getRowConstraints().add(new RowConstraints(USE_COMPUTED_SIZE));
 		this.getColumnConstraints().add(new ColumnConstraints(USE_COMPUTED_SIZE));
-		add(createBoardCards(), 0, 0);
+		add(buildBoardCards(), 0, 0);
 	}
 
-	private GridPane createBoardCards() {
+	private GridPane buildBoardCards() {
 		GridPane gridPane = new GridPane();
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
@@ -34,7 +33,7 @@ public class GameBoardLayout extends GridPane {
 		int row = 0, column = 0;
 		for (int indexCard = 0; indexCard < cards.size(); indexCard++) {
 			Card card = cards.get(indexCard);
-			gridPane.add(createCard(card), column, row);
+			gridPane.add(new CardNode(card), column, row);
 			column++;
 			if (column >= maxCardPerRow) {
 				gridPane.getRowConstraints().add(new RowConstraints(100));
@@ -42,21 +41,6 @@ public class GameBoardLayout extends GridPane {
 				column = 0;
 			}
 		}
-		return gridPane;
-	}
-
-	public static String BUTTON_STYLE = "-fx-background-color: white; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10; -fx-cursor: hand;";
-
-	private Pane createCard(Card card) {
-		ImageView imageView = new ImageView(card.getImage());
-		imageView.setPreserveRatio(true);
-		imageView.setFitWidth(80);
-		imageView.setFitHeight(80);
-		GridPane gridPane = new GridPane();
-		gridPane.setAlignment(Pos.CENTER);
-		gridPane.setPrefSize(100, 100);
-		gridPane.setStyle(BUTTON_STYLE);
-		gridPane.add(imageView, 0, 0);
 		return gridPane;
 	}
 }
